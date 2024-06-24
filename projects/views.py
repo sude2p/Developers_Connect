@@ -7,11 +7,13 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+# projects view
 def projects(request):
     projects = Project.objects.all()
     context = {'projects': projects}
     return render(request, 'projects/projects.html',context)
 
+#single project view
 def project(request, pk):
     projectObj = Project.objects.get(id=pk)
     return render(request, 'projects/single-project.html',{'project': projectObj})
