@@ -20,14 +20,14 @@
         <form action="{% url 'register' %}" class="form auth__form" method="POST">
 
             <!-- Display Messages -->
-          {% if messages %}
+          {% comment %} {% if messages %}
           {% for message in messages %}
             <div class="alert alert--{{message.tags}}">
                 <p class="alert__message">{{message}}</p>
                 <button class="alert__close">x</button>
             </div>
           {% endfor %}
-      {% endif %}
+      {% endif %} {% endcomment %}
 
           <!-- Input:Fields -->
            {% csrf_token %}
@@ -79,14 +79,14 @@
         <form action="{%url 'login'%}" class="form auth__form" method="POST">
             
             <!-- Display Messages -->
-          {% if messages %}
+          {% comment %} {% if messages %}
           {% for message in messages %}
             <div class="alert alert--{{message.tags}}">
                 <p class="alert__message">{{message}}</p>
                 <button class="alert__close">x</button>
             </div>
           {% endfor %}
-      {% endif %}
+      {% endif %} {% endcomment %}
 
 
           <!-- Input:Username -->

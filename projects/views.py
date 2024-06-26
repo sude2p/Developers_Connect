@@ -1,16 +1,26 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Project, Review, Tag
+from django.core.paginator import Paginator
 from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from .utils import searchProjects
 
 
 # Create your views here.
 
 # projects view
 def projects(request):
-    projects = Project.objects.all()
-    context = {'projects': projects}
+    
+    projects, search_query = searchProjects(request)
+
+    page = request.GET.get('page')
+    results = 3
+    paginator = Paginator(projects, results)
+    projects = paginator.page(page)
+
+    context = {'projects': projects, 'search_query': search_query}
     return render(request, 'projects/projects.html',context)
 
 #single project view
@@ -29,7 +39,7 @@ def create_Project(request):
             project = form.save(commit=False)
             project.owner = profile
             project.save()
-            return redirect('projects')
+            return redirect('account')
         # print(request.POST)
     context = {'form':form}
     
@@ -45,7 +55,7 @@ def updateProject(request, pk):
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
-            return redirect('projects')
+            return redirect('account')
     form = ProjectForm(instance=project)    
     context = {'form':form}
     return render(request, 'projects/project_form.html', context)
@@ -60,7 +70,7 @@ def deleteProject(request, pk):
 
     context= {'object':project}
     
-    return render(request, 'projects/delete_template.html', context)
+    return render(request, 'delete_template.html', context)
         
         
 

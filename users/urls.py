@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import profiles, userProfile, loginUser, logoutUser, registerUser, userAccount, editAccount
+from .views import (profiles, userProfile, loginUser, logoutUser, registerUser, 
+                    userAccount, editAccount, createSkill, updateSkill, deleteSkill)
+                
 
 urlpatterns = [
     #-------------------------------------------
@@ -17,6 +19,13 @@ urlpatterns = [
     path('account/',userAccount, name="account"),
 
     path('edit-account/',editAccount, name="edit-account"),
+
+    #-------------CRUD for skill-------------------------------------------
+
+    path('create-skill/',createSkill, name="create-skill"),
+    path('update-skill/<str:pk>/',updateSkill, name="update-skill"),
+    path('delete-skill/<str:pk>/',deleteSkill, name="delete-skill"),
+
 
     
 ]
